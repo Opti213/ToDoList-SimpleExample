@@ -1,32 +1,29 @@
 package com.e.todolist_simpleexample
 
 import android.app.Activity
-import android.graphics.Color
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.Window
+import android.view.View
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import android.widget.LinearLayout
 import android.widget.ListView
-import android.widget.TextView
-import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : Activity() {
+
+    private val toDoList : ArrayList<String> = ArrayList()
+    private lateinit var toDoAdapter : ArrayAdapter<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val addBar = findViewById<LinearLayout>(R.id.addToDoLayout)
-        val listV = findViewById<ListView>(R.id.listView)
-        val taskList : ArrayList<String> = ArrayList()
-        val taskAdapter : ArrayAdapter<String>
 
-        taskAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, taskList)
-        listV.adapter = taskAdapter
-        taskList.add("first task")
-        taskList.add("second task")
+        val listV = findViewById<ListView>(R.id.listView)
+
+        toDoAdapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, toDoList)
+        listV.adapter = toDoAdapter
+        toDoList.add("first task")
+        toDoList.add("second task")
 
         /* for textview
         for (i in 0..100){
@@ -36,5 +33,12 @@ class MainActivity : Activity() {
             container.addView(tv)
         }
         */
+    }
+
+    fun addToDo(view : View){
+        val toDoText = findViewById<EditText>(R.id.toDoEditText)
+        val text = toDoText.text.toString()
+        toDoAdapter.add(text)
+        toDoText.setText("")
     }
 }
