@@ -3,15 +3,13 @@ package com.e.todolist_simpleexample
 import android.app.Activity
 import android.os.Bundle
 import android.view.View
-import android.widget.ArrayAdapter
-import android.widget.EditText
-import android.widget.LinearLayout
-import android.widget.ListView
+import android.widget.*
 
 class MainActivity : Activity() {
 
-    private val toDoList : ArrayList<String> = ArrayList()
-    private lateinit var toDoAdapter : ArrayAdapter<String>
+    private val toDoList: ArrayList<String> = ArrayList()
+    private lateinit var toDoAdapter: ArrayAdapter<String>
+    private lateinit var listV: ListView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,7 +33,9 @@ class MainActivity : Activity() {
         */
     }
 
-    fun addToDo(view : View){
+    //todo remove ToDoItem
+
+    fun addToDo(view: View) {
         val toDoText = findViewById<EditText>(R.id.toDoEditText)
         val text = toDoText.text.toString()
         toDoAdapter.add(text)
