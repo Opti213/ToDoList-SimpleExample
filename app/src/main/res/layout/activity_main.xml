@@ -44,6 +44,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="3"
-            android:text="Add ToDo" />
+            android:text="Add ToDo"
+            android:onClick="onAddToDo"/>
     </LinearLayout>
 </android.support.constraint.ConstraintLayout>
