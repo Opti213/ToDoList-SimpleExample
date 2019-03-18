@@ -20,31 +20,35 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class MainActivity extends Activity {
-    private ArrayList<String> toDoList = new ArrayList<>();
-    private ArrayAdapter<String> toDoListAdapter;
+    private ArrayList<ToDoItem> toDoList = new ArrayList<>();
+    private ToDoAdapter tdAdapter;
     private ListView toDoListView;
+    private Date DATATMP = new Date(); //tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //set toDoList
         readFile("toDoList");
         toDoListView = (ListView) findViewById(R.id.ToDoListView);
-        toDoListAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, toDoList);
-        toDoListView.setAdapter(toDoListAdapter);
-        setupListViewListener(); //removeListener
+        tdAdapter = new ToDoAdapter(this, toDoList);
+        toDoListView.setAdapter(tdAdapter);
+        // setupListViewListener(); //todo removeListener
     }
 
     public void onAddToDo(View view){
         EditText addToDoEditText = findViewById(R.id.addToDoEditText);
         String text = addToDoEditText.getText().toString();
-        toDoListAdapter.add(text);
+        tdAdapter.add(new ToDoItem(text, "deadline", false));
         addToDoEditText.setText("");
         writeFile("toDoList");
     }
 
+    /*
     private void setupListViewListener() {
         toDoListView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -57,11 +61,13 @@ public class MainActivity extends Activity {
                     }
                 });
     }
+    */
 
+    //todo
     void writeFile(String nameOfList) {
         try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(nameOfList, Context.MODE_PRIVATE)))) {
-            for (String item : toDoList){
-                bw.write(item + "\n");
+            for (ToDoItem item : toDoList){
+                bw.write(item.name + "\n");
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -70,16 +76,17 @@ public class MainActivity extends Activity {
         }
     }
 
+    //todo
     void readFile(String nameOfList) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(nameOfList)))) {
             String str;
             while((str = br.readLine()) != null) {
-                toDoList.add(str);
+                toDoList.add(new ToDoItem(str, "deadline", false));
             }
         } catch (FileNotFoundException e) {
-            toDoList = new ArrayList<String>();
+            toDoList = new ArrayList<>();
         } catch (IOException e) {
-            toDoList = new ArrayList<String>();
+            toDoList = new ArrayList<>();
         }
     }
 }
