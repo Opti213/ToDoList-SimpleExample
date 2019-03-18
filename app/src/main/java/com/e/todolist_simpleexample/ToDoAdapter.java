@@ -66,11 +66,11 @@ public class ToDoAdapter extends BaseAdapter {
     }
 
     ArrayList<ToDoItem> getDoneList(){
-        ArrayList<ToDoItem> returndeList = new ArrayList<>();
+        ArrayList<ToDoItem> returnedList = new ArrayList<>();
         for (ToDoItem tdi : toDoItems){
-            if (tdi.isDone) returndeList.add(tdi);
+            if (tdi.isDone) returnedList.add(tdi);
         }
-        return returndeList;
+        return returnedList;
     }
 
     OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
