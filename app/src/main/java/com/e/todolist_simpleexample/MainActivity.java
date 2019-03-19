@@ -2,6 +2,7 @@ package com.e.todolist_simpleexample;
 
 import android.app.Activity;
 import android.content.Context;
+import android.support.constraint.ConstraintLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -26,7 +28,7 @@ public class MainActivity extends Activity {
     private ArrayList<ToDoItem> toDoList = new ArrayList<>();
     private ToDoAdapter tdAdapter;
     private ListView toDoListView;
-    private Date DATATMP = new Date(); //tmp;
+    private Date DATATMP = new Date(); //todo tmp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +36,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //set toDoList
         readFile("toDoList");
-        toDoListView = (ListView) findViewById(R.id.ToDoListView);
+        toDoListView = findViewById(R.id.ToDoListView);
         tdAdapter = new ToDoAdapter(this, toDoList);
         toDoListView.setAdapter(tdAdapter);
+        //set design
         // setupListViewListener(); //todo removeListener
     }
 
@@ -48,7 +51,7 @@ public class MainActivity extends Activity {
         writeFile("toDoList");
     }
 
-    /*
+    /* todo this fun
     private void setupListViewListener() {
         toDoListView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
@@ -88,5 +91,23 @@ public class MainActivity extends Activity {
         } catch (IOException e) {
             toDoList = new ArrayList<>();
         }
+    }
+
+    //get doneList
+    ArrayList<ToDoItem> getDone(){
+        ArrayList<ToDoItem> res = new ArrayList<>();
+        for(ToDoItem item : toDoList){
+            if(item.isDone) res.add(item);
+        }
+        return res;
+    }
+
+    //message
+    void getDoneMessage(){
+        String res = null;
+        for(ToDoItem item : toDoList){
+            if(item.isDone) res += (item.name + "\n");
+        }
+        Toast.makeText(this, res, Toast.LENGTH_LONG).show();
     }
 }

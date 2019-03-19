@@ -61,7 +61,7 @@ public class ToDoAdapter extends BaseAdapter {
         return view;
     }
 
-    ToDoItem getToDoItem(int position){
+     public ToDoItem getToDoItem(int position){
         return ((ToDoItem)getItem(position));
     }
 
@@ -76,7 +76,6 @@ public class ToDoAdapter extends BaseAdapter {
     OnCheckedChangeListener myCheckChangeList = new OnCheckedChangeListener() {
         public void onCheckedChanged(CompoundButton buttonView,
                                      boolean isChecked) {
-            // меняем данные товара (в корзине или нет)
             getToDoItem((Integer) buttonView.getTag()).isDone = isChecked;
         }
     };
