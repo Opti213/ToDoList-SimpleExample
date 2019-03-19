@@ -2,22 +2,20 @@ package com.e.todolist_simpleexample;
 
 import android.app.Activity;
 import android.content.Context;
-import android.support.constraint.ConstraintLayout;
-import android.support.v7.app.AppCompatActivity;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.support.constraint.ConstraintLayout;
+import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.view.Window;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
-import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
@@ -28,6 +26,8 @@ public class MainActivity extends Activity {
     private ArrayList<ToDoItem> toDoList = new ArrayList<>();
     private ToDoAdapter tdAdapter;
     private ListView toDoListView;
+    private ConstraintLayout constraintLayout;
+    private EditText addToDoEditText;
     private Date DATATMP = new Date(); //todo tmp;
 
     @Override
@@ -40,11 +40,13 @@ public class MainActivity extends Activity {
         tdAdapter = new ToDoAdapter(this, toDoList);
         toDoListView.setAdapter(tdAdapter);
         //set design
+        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+        getWindow().setStatusBarColor(Color.BLACK);
         // setupListViewListener(); //todo removeListener
     }
 
     public void onAddToDo(View view){
-        EditText addToDoEditText = findViewById(R.id.addToDoEditText);
+        addToDoEditText = findViewById(R.id.addToDoEditText);
         String text = addToDoEditText.getText().toString();
         tdAdapter.add(new ToDoItem(text, "deadline", false));
         addToDoEditText.setText("");
