@@ -3,14 +3,9 @@ package com.e.todolist_simpleexample;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
-import android.support.constraint.ConstraintLayout;
-import android.view.Menu;
-import android.view.View;
-import android.view.Window;
+import android.support.v7.widget.RecyclerView;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -25,8 +20,7 @@ import java.util.Date;
 public class MainActivity extends Activity {
     private ArrayList<ToDoItem> toDoList = new ArrayList<>();
     private ToDoAdapter tdAdapter;
-    private ListView toDoListView;
-    private ConstraintLayout constraintLayout;
+    private RecyclerView recyclerView;
     private EditText addToDoEditText;
     private Date DATATMP = new Date(); //todo tmp;
 
@@ -36,31 +30,52 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
         //set toDoList
         readFile("toDoList");
-        toDoListView = findViewById(R.id.ToDoListView);
+        recyclerView = findViewById(R.id.rvToDoList);
         tdAdapter = new ToDoAdapter(this, toDoList);
-        toDoListView.setAdapter(tdAdapter);
-        //set design
-        constraintLayout = (ConstraintLayout) findViewById(R.id.constraintLayout);
+        recyclerView.setAdapter(tdAdapter); //todo fix it
+        //todo extract in them
         getWindow().setStatusBarColor(Color.BLACK);
-        // setupListViewListener(); //todo removeListener
+        //setupListViewListener(); //todo removeListener
     }
 
-    public void onAddToDo(View view){
-        addToDoEditText = findViewById(R.id.addToDoEditText);
+    /*fun for buttons
+
+    public void onAdd(View view){
+        addToDoEditText = findViewById(R.id.etTaskName);
         String text = addToDoEditText.getText().toString();
         tdAdapter.add(new ToDoItem(text, "deadline", false));
         addToDoEditText.setText("");
         writeFile("toDoList");
+        tdAdapter.notifyDataSetChanged();
     }
 
-    /* todo this fun
+    public void onRemove(View view){
+        for (ToDoItem item : toDoList){
+            if (item.isDone) toDoList.remove(item);
+        }
+        writeFile("toDoList");
+        tdAdapter.notifyDataSetChanged();
+    }
+
+    public void onDone(View view){
+        ArrayList<ToDoItem> doneList = getSelected();
+        StringBuffer str = new StringBuffer("Done: \n");
+        for (ToDoItem item : doneList) {
+            str.append(item.name.toString());
+            str.append("\n");
+        }
+        Toast.makeText(this, str, Toast.LENGTH_SHORT).show();
+    }
+    */
+    /*todo test it
     private void setupListViewListener() {
-        toDoListView.setOnItemLongClickListener(
+        recyclerView.setOnItemLongClickListener(
                 new AdapterView.OnItemLongClickListener() {
                     @Override
                     public boolean onItemLongClick(AdapterView<?> adapter, View view, int pos, long id) {
+                        getDoneMessage();
                         toDoList.remove(pos);
-                        toDoListAdapter.notifyDataSetChanged();
+                        tdAdapter.notifyDataSetChanged();
                         writeFile("toDoList");
                         return true;
                     }
@@ -68,7 +83,7 @@ public class MainActivity extends Activity {
     }
     */
 
-    //todo
+    //save and load date
     void writeFile(String nameOfList) {
         try(BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(openFileOutput(nameOfList, Context.MODE_PRIVATE)))) {
             for (ToDoItem item : toDoList){
@@ -81,7 +96,6 @@ public class MainActivity extends Activity {
         }
     }
 
-    //todo
     void readFile(String nameOfList) {
         try(BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput(nameOfList)))) {
             String str;
@@ -95,8 +109,8 @@ public class MainActivity extends Activity {
         }
     }
 
-    //get doneList
-    ArrayList<ToDoItem> getDone(){
+    //get selected list
+    ArrayList<ToDoItem> getSelected(){
         ArrayList<ToDoItem> res = new ArrayList<>();
         for(ToDoItem item : toDoList){
             if(item.isDone) res.add(item);
@@ -110,6 +124,6 @@ public class MainActivity extends Activity {
         for(ToDoItem item : toDoList){
             if(item.isDone) res += (item.name + "\n");
         }
-        Toast.makeText(this, res, Toast.LENGTH_LONG).show();
+        Toast.makeText(this, res, Toast.LENGTH_SHORT).show();
     }
 }
