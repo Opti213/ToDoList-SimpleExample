@@ -1,5 +1,4 @@
 <resources>
     <string name="app_name">ToDoList-SimpleExample</string>
-    <string name="AddToDo">AddToDo</string>
-    <string name="EnterTask">Enter task</string>
+    <string name="action_settings">Settings</string>
 </resources>
