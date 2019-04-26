@@ -1,4 +1,5 @@
-package com.e.todolist_simpleexample;
+package com.example.todolist_simpleexample;
+
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -10,6 +11,8 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
+import com.example.todolist_simpleexample.R;
+
 import java.util.ArrayList;
 
 public class ToDoAdapter extends BaseAdapter {
@@ -17,7 +20,7 @@ public class ToDoAdapter extends BaseAdapter {
     LayoutInflater lInflater;
     ArrayList<ToDoItem> toDoItems;
 
-    ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems){
+    ToDoAdapter(Context context, ArrayList<ToDoItem> toDoItems) {
         this.context = context;
         this.toDoItems = toDoItems;
         lInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -38,7 +41,7 @@ public class ToDoAdapter extends BaseAdapter {
         return position;
     }
 
-    public void add(ToDoItem item){
+    public void add(ToDoItem item) {
         toDoItems.add(item);
     }
 
@@ -60,13 +63,13 @@ public class ToDoAdapter extends BaseAdapter {
         return view;
     }
 
-     public ToDoItem getToDoItem(int position){
-        return ((ToDoItem)getItem(position));
+    public ToDoItem getToDoItem(int position) {
+        return ((ToDoItem) getItem(position));
     }
 
-    ArrayList<ToDoItem> getDoneList(){
+    ArrayList<ToDoItem> getDoneList() {
         ArrayList<ToDoItem> returnedList = new ArrayList<>();
-        for (ToDoItem tdi : toDoItems){
+        for (ToDoItem tdi : toDoItems) {
             if (tdi.isDone) returnedList.add(tdi);
         }
         return returnedList;
@@ -81,3 +84,4 @@ public class ToDoAdapter extends BaseAdapter {
 
 
 }
+
